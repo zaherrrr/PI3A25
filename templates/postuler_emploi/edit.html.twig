@@ -1,0 +1,13 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Edit PostulerEmploi{% endblock %}
+
+{% block body %}
+    <h1>Edit PostulerEmploi</h1>
+
+    {{ include('postuler_emploi/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('postuler_emploi_index') }}">back to list</a>
+
+    {{ include('postuler_emploi/_delete_form.html.twig') }}
+{% endblock %}

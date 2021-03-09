@@ -1,0 +1,41 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Questionnaire index{% endblock %}
+
+{% block body %}
+    <h1>Questionnaire index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom_qst</th>
+                <th>Nom_cat_qst</th>
+                <th>Description_cat_qst</th>
+                <th>Nbr_qst</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for questionnaire in questionnaires %}
+            <tr>
+                <td>{{ questionnaire.id }}</td>
+                <td>{{ questionnaire.nomQst }}</td>
+                <td>{{ questionnaire.nomCatQst }}</td>
+                <td>{{ questionnaire.descriptionCatQst }}</td>
+                <td>{{ questionnaire.nbrQst }}</td>
+                <td>
+                    <a href="{{ path('questionnaire_show', {'id': questionnaire.id}) }}">show</a>
+                    <a href="{{ path('questionnaire_edit', {'id': questionnaire.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('questionnaire_new') }}">Create new</a>
+{% endblock %}

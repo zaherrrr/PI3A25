@@ -1,0 +1,46 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}OffreFreelance{% endblock %}
+
+{% block body %}
+    <h1>OffreFreelance</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ offre_freelance.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre_offre_fr</th>
+                <td>{{ offre_freelance.titreOffreFr }}</td>
+            </tr>
+            <tr>
+                <th>Descriptionfr</th>
+                <td>{{ offre_freelance.descriptionfr }}</td>
+            </tr>
+            <tr>
+                <th>Entreprisefr</th>
+                <td>{{ offre_freelance.entreprisefr }}</td>
+            </tr>
+            <tr>
+                <th>Recomponse</th>
+                <td>{{ offre_freelance.recomponse }}</td>
+            </tr>
+            <tr>
+                <th>Date_expiration</th>
+                <td>{{ offre_freelance.dateExpiration ? offre_freelance.dateExpiration|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Etat_offre</th>
+                <td>{{ offre_freelance.etatOffre ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('offre_freelance_index') }}">back to list</a>
+
+    <a href="{{ path('offre_freelance_edit', {'id': offre_freelance.id}) }}">edit</a>
+
+    {{ include('offre_freelance/_delete_form.html.twig') }}
+{% endblock %}

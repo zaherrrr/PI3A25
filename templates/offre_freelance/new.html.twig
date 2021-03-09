@@ -1,0 +1,11 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}New OffreFreelance{% endblock %}
+
+{% block body %}
+    <h1>Create new OffreFreelance</h1>
+
+    {{ include('offre_freelance/_form.html.twig') }}
+
+    <a href="{{ path('offre_freelance_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}CategoryFreelance index{% endblock %}
+
+{% block body %}
+    <h1>CategoryFreelance index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom_cat_fr</th>
+                <th>Description_cat_fr</th>
+                <th>Nbr_offre_fr</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category_freelance in category_freelances %}
+            <tr>
+                <td>{{ category_freelance.id }}</td>
+                <td>{{ category_freelance.nomCatFr }}</td>
+                <td>{{ category_freelance.descriptionCatFr }}</td>
+                <td>{{ category_freelance.nbrOffreFr }}</td>
+                <td>
+                    <a href="{{ path('category_freelance_show', {'id': category_freelance.id}) }}">show</a>
+                    <a href="{{ path('category_freelance_edit', {'id': category_freelance.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('category_freelance_new') }}">Create new</a>
+{% endblock %}
