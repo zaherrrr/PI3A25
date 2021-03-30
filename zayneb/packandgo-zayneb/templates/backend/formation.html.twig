@@ -1,0 +1,164 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block title %}formation{% endblock %}
+{% block montitre %}Liste de tous les formations
+
+
+{% endblock %}
+
+
+{% block body %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            var calendarEl = document.getElementById('calendar-holder');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                defaultView: 'dayGridMonth',
+                editable: false,
+                eventSources: [
+                    {
+                        url: "{{ path('fc_load_events') }}",
+                        method: "POST",
+                        extraParams: {
+                            filters: JSON.stringify({})
+                        },
+                        failure: () => {
+                            // alert("There was an error while fetching FullCalendar!");
+                        },
+                    },
+                ],
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay',
+                },
+                plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], // https://fullcalendar.io/docs/plugin-index
+                timeZone: 'UTC',
+            });
+            calendar.render();
+        });
+    </script>
+
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Dashboard</h1>
+                </div><!-- /.col -->
+
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Les formations</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+
+                                        {% for message in app.flashes('success') %}
+                                            <div class="alert alert-success">{{ message }}</div>
+                                        {% endfor %}
+
+                                        <table id="example2" class="table table-bordered table-hover">
+
+                                            <a class="btn btn-success" href="{{ path('formation_new') }}" >Ajouter</a>
+                                            <thead>
+                                            <tr>
+
+                                                <th>image</th>
+                                                <th>duree</th>
+                                                <th>description</th>
+                                                <th>niveau</th>
+                                                <th>categorie</th>
+                                                <th>supprimer modifier</th>
+
+                                            </tr>
+                                            </thead>
+                                            {%  for formationss in formations %}
+                                                <tbody>
+                                                <tr>
+                                                    <td ><img  width="200px" height="150px" src="{{ asset('images/aliments/' ~ formationss.image) }}"></td>
+                                                    <td>{{ formationss.dureefr|date("m/d/Y")}}</td>
+                                                    <td>{{ formationss.description}}</td>
+                                                    <td>{{ formationss.niveaufrt}}</td>
+                                                    <td>{{ formationss.categorieFormation}}</td>
+
+
+
+
+                                                    <td>
+                                                        <a class="btn btn-secondary " href="{{ path('formation_edit',{'id' : formationss.id}) }}">modifier</a>
+                                                        <a class="btn btn-danger " href="{{ path('formation_delete',{'id' : formationss.id}) }}">supprimer</a>
+
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            {% endfor %}
+                                        </table>
+
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </section>
+            </div>
+            <div class="container-fluid">
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Les formations</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+
+                                        <div id="calendar-holder"></div>
+
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </section>
+            </div>
+        </section>
+    </div>
+
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+{% endblock %}

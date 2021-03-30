@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}profil{% endblock %}
+
+{% block body%}
+    <section id="pack" class="packages">
+        <div class="container">
+            <div class="gallary-header text-center">
+                <h2>
+                   Votre Profil : Mr/Mme {{ app.user.nom }} {{ app.user.prenom }}
+                </h2>
+                <p>
+
+                </p>
+            </div><!--/.gallery-header-->
+            <div class="packages-content">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="single-package-item">
+                            <img src="{{ asset('images/aliments/' ~ app.user.image) }}" class="img-responsive" width="50" alt="package-place">
+                            <div class="single-package-item-txt">
+                                <h3>{{ app.user.nom}} <span class="pull-right">{{ app.user.prenom}}</span></h3>
+                                <div class="packages-para">
+                                    <p>
+											<span>
+												<i class="fa fa-envelope-o"></i> E-mail:
+											</span>
+                                        <i class="fa fa-angle-right"></i> {{app.user.email }}
+                                    </p>
+                                    <p>
+											<span>
+											 <i class="fa fa-user"></i> UserName
+											</span>
+                                        <i class="fa fa-angle-right"></i> {{ app.user.username }}
+                                    </p>
+                                </div><!--/.packages-para-->
+                                <div class="packages-review">
+                                    <p>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <span>254 reviews</span>
+                                    </p>
+                                </div><!--/.packages-review-->
+                                <div class="about-btn">
+                                    <button class="about-view packages-btn">
+                                        <a href="{{ path('utilisateur_modification',{'id' : app.user.id}) }}">
+                                            modifier</a>
+                                    </button>
+                                </div><!--/.about-btn-->
+                            </div><!--/.single-package-item-txt-->
+                        </div><!--/.single-package-item-->
+
+                    </div><!--/.col-->
+
+            </div><!--/.packages-content-->
+        </div><!--/.container-->
+        </div>
+    </section>
+    <div class="col-md-12 col-sm-8">
+
+        <div class="single-package-item">
+
+            <div class="single-package-item-txt">
+
+
+                <div class="about-btn">
+
+                    <br>
+
+                    <table id="example" class="table table-striped table-bordered nowrap" >
+                        <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Description</th>
+                            <th>User</th>
+                            <th>date</th>
+                            <th>traitement</th>
+                            <th>modifier supprimer</th>
+
+
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for q in app.user.reclamations %}
+
+                                <tr>
+                                    <td>{{q.titre }}</td>
+                                    <td> {{q.text }}</td>
+                                    <td> {{q.user.username }}</td>
+                                    <td>{{ q.date|date('H:i') }} | {{ q.date | date('d-m-Y')}}</td>
+                                    <td> {{q.traitement ? 'Yes':'No' }}</td>
+                                    <td>
+
+                                            <button class="btn btn-info ">   <a  href="{{ path('reclamation_edit1',{'id' :q.id,}) }}">modifier</a></button>
+
+                                        <button class="btn btn-danger ">   <a  href="{{ path('reclamation_delete1',{'id' :q.id}) }}">supprimer</a></button>
+                                    </td>
+
+
+
+
+
+
+                                </tr>
+
+                        {% endfor %}
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+
+{% endblock %}

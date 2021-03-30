@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}profil{% endblock %}
+
+{% block body%}
+
+    <br>
+
+    <div class="col-md-3 col-sm-6" style="margin-top: 100px">
+
+        <div class="single-package-item">
+
+            <div class="single-package-item-txt">
+                <h2>Categorie</h2>
+                <h3>{{ categorie.nomcatfrt}} <span class="pull-right"></span></h3>
+                <div class="packages-para">
+                    <p>
+											<span>
+												<b>Description:</b>
+											</span>
+                        <br><br>
+                        {{categorie.descriptioncatfrt }}
+                    </p>
+                </div><!--/.packages-para-->
+
+
+            </div><!--/.about-btn-->
+
+        </div><!--/.single-package-item-txt-->
+    </div><!--/.single-package-item-->
+
+    <div style="text-align: center" >
+        <h2>les formations</h2>
+    {% for e in categorie.formation %}
+        <div class="col-md-3 col-sm-6" style="margin-top: 100px">
+
+            <div class="single-package-item">
+
+                <div class="single-package-item-txt">
+                    <br>
+                    <img style="width: 250px; height: 150px;" src="{{ asset('images/aliments/' ~ e.image) }}">
+
+                    <h4>
+
+                      description:  {{ e.description }}
+
+                        <span class="pull-right"></span></h4>
+                    <h4>
+
+                        duree: {{ e.dureefr|date("m/d/Y")}}
+
+                        <span class="pull-right"></span></h4>
+                    <h4>
+
+                        niveau: {{ e.niveaufrt}}
+
+                        <span class="pull-right"></span></h4>
+                    {% if app.user %}
+                    {% if e.id in testoffre  %}
+                        <button class="book-btn w-auto"><a  href="{{ path("Participationsupp",{"id":e.id,"id1":categorie.id})}}"  >
+                                Annuler <br> Participation
+                            </a></button>
+                    {% else %}
+                    <button class="book-btn w-auto"><a  href="{{ path("ParticiperFormation",{"id":e.id,"id1":categorie.id})}}"  >
+                            Participer
+                        </a></button>
+                    {% endif %}
+                    {% else %}
+                    <button class="book-btn"><a href="{{ path ('login') }}">Login <br> pour participer
+                        </a></button>
+                        {% endif %}
+                </div><!--/.about-btn-->
+
+            </div><!--/.single-package-item-txt-->
+        </div><!--/.single-package-item-->
+    {% endfor %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}profil{% endblock %}
+
+{% block body%}
+    <br>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#postuler_emploi_Enregistrer').click(function () {
+
+                var nom =$('#postuler_emploi_motivation').val();
+
+                var emploi =$('#postuler_emploi_pdfcv').val();
+
+
+                if ((nom.length<30)||((nom.length>255)))
+                {
+                    swal({
+                        title: 'Error!',
+                        text: 'Motivation:il faut au moin 30 caractere et max 255',
+                        icon: 'error',
+                        button: {
+                            text: "Continue",
+                            value: true,
+                            visible: true,
+                            className: "btn btn-primary"
+                        }
+                    });
+                    return false;
+
+                }
+                else if (emploi.length==0)
+                {
+                    swal({
+                        title: 'Error!',
+                        text: 'file:inserer un ficher ',
+                        icon: 'error',
+                        button: {
+                            text: "Continue",
+                            value: true,
+                            visible: true,
+                            className: "btn btn-primary"
+                        }
+                    });
+                    return false;
+
+                }
+                else if (cat.length==0)
+                {
+                    swal({
+                        title: 'Error!',
+                        text: 'categorie emploi:il faut choisir categorie',
+                        icon: 'error',
+                        button: {
+                            text: "Continue",
+                            value: true,
+                            visible: true,
+                            className: "btn btn-primary"
+                        }
+                    });
+                    return false;
+
+                }
+
+
+
+            });
+
+
+        });
+
+    </script>
+    <div style="margin-left: 250px" class="col-md-8 col-sm-4">
+        {{ form_start(form) }}
+
+
+
+
+
+        {{ form_widget(form) }}
+
+
+
+
+
+        {{ form_end(form) }}
+    </div>
+
+
+
+
+{% endblock %}

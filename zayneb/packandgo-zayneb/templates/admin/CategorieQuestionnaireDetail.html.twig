@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}profil{% endblock %}
+
+{% block body%}
+
+
+<br>
+
+    <div  class="col-md-3 col-sm-6" style="">
+
+        <div class="single-package-item">
+
+            <div class="single-package-item-txt">
+                <h2>Categorie</h2>
+                <h3>{{ categorie.nomcatqst}} <span class="pull-right"></span></h3>
+                <div class="packages-para">
+                    <p>
+											<span>
+												<b>Description:</b>
+											</span>
+                        <br><br>
+                        {{categorie.descriptioncatqst }}
+                    </p>
+                </div><!--/.packages-para-->
+
+
+            </div><!--/.about-btn-->
+
+        </div><!--/.single-package-item-txt-->
+    </div><!--/.single-package-item-->
+
+
+<div class="col-md-8 col-sm-8">
+
+    <div class="single-package-item">
+
+        <div class="single-package-item-txt">
+
+
+            <div class="about-btn">
+                <br>
+
+        <table id="example" class="table table-striped table-bordered nowrap" >
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Description</th>
+
+
+                    <th>Details</th>
+
+
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for q in categorie.questionnaire %}
+                <tr >
+                    <td>{{ q.nomqst }}</td>
+                    <td>{{ q.descriptioncatqst }}</td>
+
+                    <td>
+
+                        <button class="book-btn w-auto"><a  href="{{ path("reponseQuest",{"id":q.id,"id1":categorie.id})}}"  >
+                                Detail
+                            </a></button>
+                    </td>
+
+
+                </tr>
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+                </div><!--/.about-btn-->
+
+
+{% endblock %}

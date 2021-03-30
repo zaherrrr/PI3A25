@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}profil{% endblock %}
+
+{% block body%}
+
+    <br>
+
+    <div class="col-md-3 col-sm-6">
+
+        <div class="single-package-item">
+
+            <div class="single-package-item-txt">
+                <h3>{{ categorie.nomEmploi}} <span class="pull-right"></span></h3>
+                <div class="packages-para">
+                    <p>
+											<span>
+												<i class="fa fa-envelope-o"></i> Description:
+											</span>
+                        <br>
+                        {{categorie.descriptionEmploi }}
+                    </p>
+                    <p>
+
+
+                    </p>
+                </div><!--/.packages-para-->
+
+
+            </div><!--/.about-btn-->
+        </div><!--/.single-package-item-txt-->
+    </div><!--/.single-package-item-->
+
+    </div><!--/.col-->
+    <div class="col-md-8 col-sm-8">
+
+        <div class="single-package-item">
+
+            <div class="single-package-item-txt">
+
+
+                <div class="about-btn">
+                    <br>
+                    <table id="example" class="table table-striped table-bordered nowrap" >
+                        <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Categorie</th>
+                            {% if is_granted("ROLE_EMPLOYE") or is_granted("ROLE_ADMIN") %}
+                            <th>Postulation</th>
+                            {% endif %}
+                             {% if is_granted("ROLE_EMPLOYEUR") or is_granted("ROLE_ADMIN")  %}
+                                 <th>Liste Postulation</th>
+                            {% endif %}
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for e in categorie.offre %}
+                            <tr >
+                                <td>{{ e.titreoffreemploi }}</td>
+                                <td>{{ e.descriptioncatem }}</td>
+                                <td>{{ e.categorieEmploi.nomEmploi }}
+
+
+                                </td>
+                                {% if is_granted("ROLE_EMPLOYE") or is_granted("ROLE_ADMIN") %}
+
+                                    <td>
+
+                                        {% if e.id in testoffre  %}
+                                            <button class="book-btn"><a  href="{{ path("PostulerEmploisupp",{"id":e.id,"id1":categorie.id})}}"  >
+                                                    supprimer
+                                                </a></button>
+                                        {% else %}
+                                            <button class="book-btn"><a  href="{{ path("PostulerEmploi",{"id":e.id,"id1":categorie.id})}}"  >
+                                                    Postuler
+                                                </a></button>
+
+{% endif %}
+
+
+
+                                    </td>
+                                    {% endif %}
+                                {% if is_granted("ROLE_EMPLOYEUR") or is_granted("ROLE_ADMIN")  %}
+                                    <td>
+                                    <button class="book-btn w-auto"><a  href="{{ path("listePostulation",{"id":e.id})}}"  >
+                                            Detail
+                                        </a></button>
+                                    </td>
+
+                                {% endif %}
+
+
+
+                            </tr>
+                        {% endfor %}
+
+
+                        </tbody>
+                    </table>
+
+
+                </div><!--/.about-btn-->
+            </div><!--/.single-package-item-txt-->
+        </div><!--/.single-package-item-->
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

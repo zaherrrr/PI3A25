@@ -1,0 +1,81 @@
+{% extends 'dashboard.html.twig' %}
+
+
+{% block title %}
+
+        Modification {{ utilisateur.nom }}
+
+
+{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+
+
+        <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+
+                $('#user_modif_Enregistrer').click(function () {
+
+                    var password =$('#user_modif_password').val();
+
+                    var verif =$('#user_modif_verifpassword').val();
+
+                    if ((password.length<5)||((password.length>10)))
+                    {
+                        swal({
+                            title: 'Error!',
+                            text: 'password:il faut au moin 5 caractere et max 10',
+                            icon: 'error',
+                            button: {
+                                text: "Continue",
+                                value: true,
+                                visible: true,
+                                className: "btn btn-primary"
+                            }
+                        });
+                        return false;
+
+                    }
+                    if ((verif.length==0)||((password !==verif)))
+                    {
+                        swal({
+                            title: 'Error!',
+                            text: 'verifpassword:different de password',
+                            icon: 'error',
+                            button: {
+                                text: "Continue",
+                                value: true,
+                                visible: true,
+                                className: "btn btn-primary"
+                            }
+                        });
+                        return false;
+
+                    }
+
+
+                });
+
+
+            });
+
+        </script>
+
+
+
+
+
+    {{ form_widget(form) }}
+
+
+
+
+
+
+    {{ form_end(form) }}
+{% endblock %}

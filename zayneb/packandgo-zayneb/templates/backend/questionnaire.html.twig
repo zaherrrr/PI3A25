@@ -1,0 +1,100 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block title %}questionnaire{% endblock %}
+{% block montitre %}Liste de tous les formations
+
+
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Dashboard</h1>
+                </div><!-- /.col -->
+
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Les questionnaires</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+
+                                        {% for message in app.flashes('success') %}
+                                            <div class="alert alert-success">{{ message }}</div>
+                                        {% endfor %}
+
+                                        <table id="example2" class="table table-bordered table-hover">
+
+                                            <a class="btn btn-success" href="{{ path('questionnaire_new') }}" >Ajouter</a>
+                                            <thead>
+                                            <tr>
+
+
+
+                                                <th>description</th>
+                                                <th>nom</th>
+                                                <th>categorie</th>
+                                                <th>modifier supprimer</th>
+
+
+                                            </tr>
+                                            </thead>
+                                            {%  for questionnairess in questionnaires %}
+                                                <tbody>
+                                                <tr>
+
+
+                                                    <td>{{ questionnairess.descriptioncatqst}}</td>
+                                                    <td>{{ questionnairess.nomqst}}</td>
+                                                    <td>{{ questionnairess.categorieQuestionnaire}}</td>
+
+
+
+
+                                                    <td>
+                                                        <a class="btn btn-secondary " href="{{ path('questionnaire_edit',{'id' : questionnairess.id}) }}">modifier</a>
+                                                        <a class="btn btn-danger " href="{{ path('questionnaire_delete',{'id' : questionnairess.id}) }}">supprimer</a>
+
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </section>
+            </div>
+        </section>
+    </div>
+
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+{% endblock %}
