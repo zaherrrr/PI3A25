@@ -1,0 +1,274 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block title %}categorie{% endblock %}
+{% block montitre %}Liste de tous les categorie
+
+
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Dashboard</h1>
+                </div><!-- /.col -->
+
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Les categorie</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+
+                                        {% for message in app.flashes('success') %}
+                                            <div class="alert alert-success">{{ message }}</div>
+                                        {% endfor %}
+
+                                        <table  class="table table-bordered table-hover">
+
+                                            <a class="btn btn-success" href="{{ path('categorie_questionnaire_new') }}" >Ajouter</a><br><br>
+                                            <input  name="q" type="text" id="search" size="30" maxlength="128" class="txt" placeholder="Type your answer here" >
+
+                                            <thead>
+                                            <tr>
+
+                                                <th><i id="orderDESNom" class="">↓</i>Nom<i id="orderASCNom" class="">↑</i></th>
+                                                <th><i id="orderDES" class="">↓</i>Description<i id="orderASC" class="">↑</i></th>
+
+                                                <th>modifier supprimer</th>
+
+
+                                            </tr>
+                                            </thead>
+
+                                            <tbody id="allTTT">
+                                                {%  for categorie_questionnairess in categorie_questionnaires %}
+                                                <tr>
+                                                    <td>{{ categorie_questionnairess.nomcatqst }}</td>
+                                                    <td>{{ categorie_questionnairess.descriptioncatqst}}</td>
+
+
+
+
+
+                                                    <td>
+                                                        <a class="btn btn-secondary " href="{{ path('categorie_questionnaire_edit',{'id' : categorie_questionnairess.id}) }}">modifier</a>
+                                                        <a class="btn btn-danger " href="{{ path('categorie_questionnaire_delete',{'id' : categorie_questionnairess.id}) }}">supprimer</a>
+
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            <tbody id="search11">
+                                            </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </section>
+            </div>
+        </section>
+    </div>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    <script>
+        $( document ).ready(function() {
+            $("#search").keyup(function(e){
+                /* La variable value va prendre la valeur insérer dans le champ de texte
+                afin d’effectuer la recherche */
+                var value = $(this).val();
+                /* Ajax est lancé lors du remplissage du champ texte dont l’id est
+                « search » pour faire la recherche */
+                $.ajax({
+                    /* l’url est une chaine de caractères contenant l’adresse où la requête est
+                    envoyée */
+                    url : "{{ path('demandeQuest') }}",
+                    /* La méthode utilisée pour transférer les données est GET */
+                    type : 'GET',
+                    /*Ici search value va prendre la chaine entrée par un utilisateur dans la
+                    zone de recherche et sera placée après l’url */
+                    data: {
+                        'id' : value
+                    },
+                    /*Cette fonction permet de vider le contenu du tableau pour recevoir le
+                    nouveau contenu*/
+                    success : function(retour){
+                        if(retour){
+
+                            $("#search11").empty();
+                            $.each(JSON.parse(retour), function(i, obj) {
+                                $("#allTTT").hide();
+                                $("#search11").append('<tr><td> '+obj.nomCatQst+' </td><td>'+obj.descriptionCatQst+'</td><td><a class="btn btn-secondary" href="'+obj.id+'/edit">modifer</a><a class="btn btn-danger" href="deleteques/'+obj.id+'">supprimer</a></td></tr>');
+                            });
+                        }
+                        else
+                        { $("#allTTT").show();
+                            $("#search11").empty();
+                            $("#search11").fadeIn('fast');
+
+                        }
+                    },
+                });
+                return false;
+            });
+        });
+    </script>
+    <script>
+        $( document ).ready(function() {
+            $("#orderDES").click(function(e){
+                var value = $(this).val();
+                $.ajax({
+                    url : "{{ path('demandeQuestDES') }}",
+                    type : 'GET',
+
+                    data: {
+                        'id' : value
+                    },
+                    success : function(retour){
+                        if(retour){
+
+                            $("#search11").empty();
+                            $.each(JSON.parse(retour), function(i, obj) {
+                                $("#allTTT").hide();
+                                $("#search11").append('<tr><td> '+obj.nomCatQst+' </td><td>'+obj.descriptionCatQst+'</td><td><a class="btn btn-secondary" href="'+obj.id+'/edit">modifer</a><a class="btn btn-danger" href="deleteques/'+obj.id+'">supprimer</a></td></tr>');
+                            });
+                        }
+                        else
+                        { $("#allTTT").show();
+                            $("#search11").empty();
+                            $("#search11").fadeIn('fast');
+
+                        }
+                    },
+                });
+                return false;
+            });
+        });
+    </script>
+    <script>
+        $( document ).ready(function() {
+            $("#orderASC").click(function(e){
+                var value = $(this).val();
+                $.ajax({
+                    url : "{{ path('demandeQuestASC') }}",
+                    type : 'GET',
+
+                    data: {
+                        'id' : value
+                    },
+                    success : function(retour){
+                        if(retour){
+
+                            $("#search11").empty();
+                            $.each(JSON.parse(retour), function(i, obj) {
+                                $("#allTTT").hide();
+                                $("#search11").append('<tr><td> '+obj.nomCatQst+' </td><td>'+obj.descriptionCatQst+'</td><td><a class="btn btn-secondary" href="'+obj.id+'/edit">modifer</a><a class="btn btn-danger" href="deleteques/'+obj.id+'">supprimer</a></td></tr>');
+                            });
+                        }
+                        else
+                        { $("#allTTT").show();
+                            $("#search11").empty();
+                            $("#search11").fadeIn('fast');
+
+                        }
+                    },
+                });
+                return false;
+            });
+        });
+    </script>
+    <script>
+        $( document ).ready(function() {
+            $("#orderDESNom").click(function(e){
+                var value = $(this).val();
+                $.ajax({
+                    url : "{{ path('demandeQuestDESNom') }}",
+                    type : 'GET',
+
+                    data: {
+                        'id' : value
+                    },
+                    success : function(retour){
+                        if(retour){
+
+                            $("#search11").empty();
+                            $.each(JSON.parse(retour), function(i, obj) {
+                                $("#allTTT").hide();
+                                $("#search11").append('<tr><td> '+obj.nomCatQst+' </td><td>'+obj.descriptionCatQst+'</td><td><a class="btn btn-secondary" href="'+obj.id+'/edit">modifer</a><a class="btn btn-danger" href="deleteques/'+obj.id+'">supprimer</a></td></tr>');
+                            });
+                        }
+                        else
+                        { $("#allTTT").show();
+                            $("#search11").empty();
+                            $("#search11").fadeIn('fast');
+
+                        }
+                    },
+                });
+                return false;
+            });
+        });
+    </script>
+    <script>
+        $( document ).ready(function() {
+            $("#orderASCNom").click(function(e){
+                var value = $(this).val();
+                $.ajax({
+                    url : "{{ path('demandeQuestASCNom') }}",
+                    type : 'GET',
+
+                    data: {
+                        'id' : value
+                    },
+                    success : function(retour){
+                        if(retour){
+
+                            $("#search11").empty();
+                            $.each(JSON.parse(retour), function(i, obj) {
+                                $("#allTTT").hide();
+                                $("#search11").append('<tr><td> '+obj.nomCatQst+' </td><td>'+obj.descriptionCatQst+'</td><td><a class="btn btn-secondary" href="'+obj.id+'/edit">modifer</a><a class="btn btn-danger" href="deleteques/'+obj.id+'">supprimer</a></td></tr>');
+                            });
+                        }
+                        else
+                        { $("#allTTT").show();
+                            $("#search11").empty();
+                            $("#search11").fadeIn('fast');
+
+                        }
+                    },
+                });
+                return false;
+            });
+        });
+    </script>
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}profil{% endblock %}
+
+{% block body%}
+
+    <br>
+    <div class="gallary-header text-center">
+        <h2>
+            Nos categories
+        </h2>
+
+    </div><!--/.gallery-header-->
+    <br><br><br>
+
+    {% for categorie in categorie_formations %}
+        <div class="col-md-3 col-sm-4" style="margin-left: 100px">
+            <div class="single-package-item">
+
+                <div class="single-package-item-txt">
+                    <h3>{{ categorie.nomcatfrt}} <span class="pull-right"></span></h3>
+                    <div class="packages-para">
+                        <p>
+											<span>
+												<i class="fa fa-envelope-o"></i> Description:
+											</span>
+                            <i class="fa fa-angle-right"></i> {{categorie.descriptioncatfrt }}
+                        </p>
+
+                    </div><!--/.packages-para-->
+
+                    <div class="about-btn">
+                        <button class="about-view packages-btn">
+                            <a href="{{ path("frontCD",{"id":categorie.id}) }}"  >
+                                Detail
+                            </a></button>
+                    </div><!--/.about-btn-->
+                </div><!--/.single-package-item-txt-->
+            </div><!--/.single-package-item-->
+
+        </div><!--/.col-->
+
+    {% endfor %}
+
+    <div class="col-md-3 col-sm-4" style="margin-left: 120px;">
+        <br>
+        <br>
+        <br><br> <br>
+        <br>
+        <br><br> <br>
+
+
+
+    {{ knp_pagination_render(categorie_formations ) }}
+    </div>
+
+
+
+
+
+{% endblock %}

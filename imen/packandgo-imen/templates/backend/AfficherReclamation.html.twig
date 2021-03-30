@@ -1,0 +1,105 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block title %}questionnaire{% endblock %}
+{% block montitre %}Liste de tous les formations
+
+
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Dashboard</h1>
+                </div><!-- /.col -->
+
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Les Reclamations</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+
+
+                                    <table id="example2" class="table table-bordered table-hover" >
+                                        <thead>
+                                        <tr>
+                                            <th>Titre</th>
+                                            <th>Description</th>
+                                            <th>User</th>
+                                            <th>date</th>
+                                            <th>traitement</th>
+                                            <th>Traiter</th>
+
+
+
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for q in reclamations %}
+
+                                            <tr>
+                                                <td>{{q.titre }}</td>
+                                                <td> {{q.text }}</td>
+                                                <td> {{q.user.username }}</td>
+                                                <td>{{ q.date|date('H:i') }} | {{ q.date | date('d-m-Y')}}</td>
+                                                <td> {{q.traitement ? 'Yes':'No' }}</td>
+                                                <td>
+                                                    {% if q.traitement=='0' %}
+                                                   <a class="btn btn-info " href="{{ path('reclamation_traiter',{'id' :q.id,}) }}">traiter</a>
+                                                    {% else %}
+                                                        <a class="btn btn-danger " >Reclamation <br>Traitee</a>
+                                                        {% endif %}
+
+
+                                                        </td>
+
+
+
+
+
+
+                                            </tr>
+
+                                        {% endfor %}
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
+            </section>
+        </div>
+    </section>
+    </div>
+
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+{% endblock %}

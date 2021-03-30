@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}profil{% endblock %}
+
+{% block body%}
+
+    <br>
+    <div  class="about-btn">
+        {% if is_granted("ROLE_EMPLOYEUR") or is_granted("ROLE_ADMIN") %}
+        <button  style="margin-left: 700px; " class="btn btn-primary"><a href="{{ path("ajouterEMPF") }}" style="color: white;font-size: 30px" >Ajouter Emploi</a></button>
+        {% endif %}
+        <br>
+
+
+    </div>
+    <br>
+    {% for categorie in categorie_emplois %}
+        <div class="col-md-3 col-sm-4">
+            <div class="single-package-item">
+
+                <div class="single-package-item-txt">
+                    <h3>{{ categorie.nomEmploi}} <span class="pull-right"></span></h3>
+                    <div class="packages-para">
+                        <p>
+											<span>
+												<i class="fa fa-archive"></i> Description:
+											</span>
+                            <i class="fa fa-angle-right"></i> {{categorie.descriptionEmploi }}
+                        </p>
+                        <p>
+											<span>
+											 <i class="fa fa-user"></i> Nombre Emploi:
+											</span>
+                            <i class="fa fa-angle-right"></i> {{ categorie.offre|length }}
+                        </p>
+                    </div><!--/.packages-para-->
+
+                    <div class="about-btn">
+                        <button class="about-view packages-btn">
+                            <a href="{{ path("frontCEF",{"id":categorie.id}) }}"  >
+                                Detail
+                            </a></button>
+                    </div><!--/.about-btn-->
+                </div><!--/.single-package-item-txt-->
+            </div><!--/.single-package-item-->
+
+        </div><!--/.col-->
+
+    {% endfor %}
+
+
+
+
+{% endblock %}

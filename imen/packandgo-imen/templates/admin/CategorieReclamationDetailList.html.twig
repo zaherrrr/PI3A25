@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}profil{% endblock %}
+
+{% block body%}
+
+
+    <br>
+
+
+
+
+    <div class="col-md-12 col-sm-8">
+
+        <div class="single-package-item">
+
+            <div class="single-package-item-txt">
+
+
+                <div class="about-btn">
+
+                    <br>
+
+                    <table id="example" class="table table-striped table-bordered nowrap" >
+                        <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Description</th>
+                            <th>User</th>
+                            <th>date</th>
+                            <th>traitement</th>
+
+                            <th>modifier supprimer</th>
+
+
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for q in categorie.reclamations %}
+                            {% if q.etat=='1'%}
+                            <tr>
+                                <td>{{q.titre }}</td>
+                                <td> {{q.text }}</td>
+                                <td> {{q.user.username }}</td>
+                                <td>{{ q.date|date('H:i') }} | {{ q.date | date('d-m-Y')}}</td>
+                                <td> {{q.traitement ? 'Yes':'No' }}</td>
+                                <td>
+                                    {% if app.user.username ==q.user.username %}
+                            {% if q.traitement =='0'%}
+                                    <button class="btn btn-info ">   <a  href="{{ path('reclamation_edit',{'id' :q.id,'id1':categorie.id}) }}">modifier</a></button>
+                                 {% endif %}
+                                <button class="btn btn-danger ">   <a  href="{{ path('reclamation_delete',{'id' :q.id,'id1':categorie.id}) }}">supprimer</a></button>
+                               {% endif %}
+                                </td>
+
+
+
+
+
+
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div><!--/.about-btn-->
+
+
+{% endblock %}

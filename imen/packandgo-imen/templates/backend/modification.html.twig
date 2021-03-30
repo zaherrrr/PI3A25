@@ -1,0 +1,270 @@
+{% extends 'dashboard.html.twig' %}
+
+
+{% block title %}
+    {% if isModification %}
+    Modification {{ utilisateur.nom }}
+{% else %}
+    Ajouter un utilisateur
+    {% endif %}
+
+{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+
+{% if not isModification %}
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            function validateUser(usern){
+
+                return $.ajax({
+                    url: "{{ path('demandeUser') }}",
+
+                    async: false,
+                    dataType: 'json',
+                    data: {
+                        'id' : usern
+                    },
+                    type: "GET",
+                    success: function(data){
+                        console.log(data); // this is currently returning FALSE
+                    }
+                });
+            }
+
+
+
+
+            $('#utildash_Enregistrer').click(function () {
+                function validateEmail(email) {
+                    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                    return regex.test(email);
+                }
+
+
+
+
+                var nom =$('#utildash_nom').val();
+
+                var prenom =$('#utildash_prenom').val();
+
+                var img =$('#utildash_imageFile').val();
+
+                var mail =$('#utildash_email').val();
+
+                var test='';
+
+
+                var username =$('#utildash_username').val();
+                validateUser(username).done(function(data){
+                    test=data;
+
+                });
+
+                var password =$('#utildash_password').val();
+
+                var roles =$('#utildash_Roles').val();
+
+
+
+
+                if (nom.length==0)
+                {
+                    swal({
+                        title: 'Error!',
+                        text: 'remplir champ nom',
+                        icon: 'error',
+                        button: {
+                            text: "Continue",
+                            value: true,
+                            visible: true,
+                            className: "btn btn-primary"
+                        }
+                    });
+                    return false;
+
+                }
+                else if ((nom.length>15 )|| (!/^[a-zA-Z]+$/.test(nom)) )
+                {
+                    swal({
+                        title: 'Error!',
+                        text: 'champ nom > 15 ou contient des nombres',
+                        icon: 'error',
+                        button: {
+                            text: "Continue",
+                            value: true,
+                            visible: true,
+                            className: "btn btn-primary"
+                        }
+                    });
+                    return false;
+
+                }
+
+                else if (prenom.length==0)
+                {
+                    swal({
+                        title: 'Error!',
+                        text: 'remplir champ prenom',
+                        icon: 'error',
+                        button: {
+                            text: "Continue",
+                            value: true,
+                            visible: true,
+                            className: "btn btn-primary"
+                        }
+                    });
+                    return false;
+
+                }
+                else if ((prenom.length>15 )|| (!/^[a-zA-Z]+$/.test(prenom)) )
+                {
+                    swal({
+                        title: 'Error!',
+                        text: 'champ prenom > 15 ou contient des nombres',
+                        icon: 'error',
+                        button: {
+                            text: "Continue",
+                            value: true,
+                            visible: true,
+                            className: "btn btn-primary"
+                        }
+                    });
+                    return false;
+
+                }
+                else if (img.length==0)
+                {
+                    swal({
+                        title: 'Error!',
+                        text: 'remplir champ image',
+                        icon: 'error',
+                        button: {
+                            text: "Continue",
+                            value: true,
+                            visible: true,
+                            className: "btn btn-primary"
+                        }
+                    });
+                    return false;
+
+                }
+                else if (mail.length==0)
+                {
+                    swal({
+                        title: 'Error!',
+                        text: 'remplir champ email',
+                        icon: 'error',
+                        button: {
+                            text: "Continue",
+                            value: true,
+                            visible: true,
+                            className: "btn btn-primary"
+                        }
+                    });
+                    return false;
+
+                }
+                else if (!validateEmail(mail))
+                {
+                    swal({
+                        title: 'Error!',
+                        text: 'email non valide',
+                        icon: 'error',
+                        button: {
+                            text: "Continue",
+                            value: true,
+                            visible: true,
+                            className: "btn btn-primary"
+                        }
+                    });
+                    return false;
+
+                }
+
+
+               else if((username.length <5)||(username.length > 10))
+                {
+                    swal({
+                        title: 'Error!',
+                        text: 'username:il faut au moin 5 caractere et max 10',
+                        icon: 'error',
+                        button: {
+                            text: "Continue",
+                            value: true,
+                            visible: true,
+                            className: "btn btn-primary"
+                        }
+                    });
+                    return false;
+                }
+                else if (test=='false')
+                {
+
+                    swal({
+                        title: 'Error!',
+                        text: 'username deja existe',
+                        icon: 'error',
+                        button: {
+                            text: "Continue",
+                            value: true,
+                            visible: true,
+                            className: "btn btn-primary"
+                        }
+                    });
+                    return false;
+                }
+
+                else if ((password.length <5)||(password.length > 10))
+                {
+                    swal({
+                        title: 'Error!',
+                        text: 'password :il faut au moin 5 caractere et max 10',
+                        icon: 'error',
+                        button: {
+                            text: "Continue",
+                            value: true,
+                            visible: true,
+                            className: "btn btn-primary"
+                        }
+                    });
+                    return false;
+
+
+                }
+
+
+
+
+
+
+            });
+
+
+        });
+
+    </script>
+
+    {% endif %}
+
+
+        {% if isModification %}
+            <img src="{{ asset('images/aliments/' ~ utilisateur.image) }}" style="width:25%">
+        {% endif %}
+        <div>{{ form_row(form.nom,{"attr":{'class':'text-danger bg-success'},"label":"Votre nom"}) }}</div>
+        <div>{{ form_row(form.prenom,{"attr":{'class':'text-danger bg-success'},"label":"Votre prenom"}) }}</div>
+        <div>{{ form_row(form.imageFile) }}</div>
+        {{ form_widget(form) }}
+
+
+
+
+
+
+    {{ form_end(form) }}
+{% endblock %}

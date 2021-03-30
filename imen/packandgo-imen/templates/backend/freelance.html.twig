@@ -1,0 +1,159 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block title %}freelance{% endblock %}
+{% block montitre %}Liste de tous les freelances
+
+
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Dashboard</h1>
+                </div><!-- /.col -->
+
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Liste freelance</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+
+                                        {% for message in app.flashes('success') %}
+                                            <div class="alert alert-success">{{ message }}</div>
+                                        {% endfor %}
+
+                                        <table id="example2" class="table table-bordered table-hover">
+
+                                            <a class="btn btn-success" href="{{ path('offre_freelance_new') }}" >Ajouter</a>
+                                            <thead>
+                                            <tr>
+
+                                                <th>titre</th>
+                                                <th>description</th>
+                                                <th>entreprise</th>
+                                                <th>recomponse</th>
+                                                <th>date experation</th>
+                                                <th>categorie</th>
+                                                <th>modifier supprimer</th>
+
+
+                                            </tr>
+                                            </thead>
+                                            {%  for offrefreelances in freelance %}
+                                                <tbody>
+                                                <tr>
+                                                    <td>{{ offrefreelances.titreoffrefr}}</td>
+                                                    <td>{{ offrefreelances.descriptionfr}}</td>
+                                                    <td>{{ offrefreelances.entreprisefr}}</td>
+                                                    <td>{{ offrefreelances.recomponse}}</td>
+                                                    <td>{{ offrefreelances.dateexpiration|date("m/d/Y")}}</td>
+                                                    <td>{{ offrefreelances.categorieFreelance}}</td>
+                                                    <td>
+                                                        <a class="btn btn-secondary " href="{{ path('offre_freelance_edit',{'id' : offrefreelances.id}) }}">modifier</a>
+                                                        <a class="btn btn-danger " href="{{ path('offre_freelance_delete',{'id' : offrefreelances.id}) }}">supprimer</a>
+
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </section>
+            </div>
+            <div class="container-fluid">
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Liste Postulation</h3>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+
+
+                                        <table id="example2" class="table table-bordered table-hover">
+
+
+                                            <thead>
+                                            <tr>
+
+                                                <th>Username</th>
+                                                <th>Email</th>
+                                                <th>Date</th>
+                                                <th>Motivation</th>
+                                                <th>Ficher</th>
+                                                <th>OffreFreelance</th>
+
+
+
+                                            </tr>
+                                            </thead>
+
+                                                <tbody>
+                                                {%  for offrefreelances in freelance %}
+                                                {%  for e in offrefreelances.postulerFreelances %}
+                                                <tr>
+                                                    <td>{{ e.user.username}}</td>
+                                                    <td>{{ e.user.email}}</td>
+                                                    <td>{{ e.datePostulation|date('H:i')}} {{ e.datePostulation | date('d-m-Y') }}</td>
+                                                    <td>{{ e.motivation}}</td>
+                                                    <td><a href="{{ asset('uploads/pdf/' ~ e.pdfcv) }}" download="{{ e.user.username }}">Download</a></td>
+                                                    <td>{{ e.offreFreelance.titreoffrefr}}</td>
+
+
+                                                </tr>
+                                                {% endfor %}
+                                                {% endfor %}
+                                                </tbody>
+
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </section>
+            </div>
+        </section>
+    </div>
+
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+{% endblock %}

@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}profil{% endblock %}
+
+{% block body%}
+
+
+    <br>
+
+    <div  class="col-md-3 col-sm-6" style="">
+
+        <div class="single-package-item">
+
+            <div class="single-package-item-txt">
+
+                <h3>{{ questionnaire.nomqst}} <span class="pull-right"></span></h3>
+                <div class="packages-para">
+                    <p>
+											<span>
+												<b>Description:</b>
+											</span>
+                        <br><br>
+                        {{questionnaire.descriptioncatqst }}
+                    </p>
+                    {% if app.user %}
+                    {{ form_start(form) }}
+
+                    {{ form_widget(form) }}
+
+                    {{ form_end(form) }}
+                    {% else %}
+                    <button class="book-btn"><a href="{{ path ('login') }}">Login <br> pour commenter
+                    {% endif %}
+                </div><!--/.packages-para-->
+
+
+            </div><!--/.about-btn-->
+
+        </div><!--/.single-package-item-txt-->
+    </div><!--/.single-package-item-->
+
+
+    <div class="col-md-9 col-sm-8">
+
+        <div class="single-package-item">
+
+            <div class="single-package-item-txt">
+
+
+                <div class="about-btn">
+
+                    <br>
+                    {% if questionnaire.reponses | length > 0 %}
+                        <img style=" height: 150px; width: 150px; " src="{{ asset('uploads/images/') }}{{questionnaire.id ~'.png'}}">
+                    {% endif %}
+                    <table id="example" class="table table-striped table-bordered nowrap" >
+                        <thead>
+                        <tr>
+                            <th>Reponses</th>
+
+
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for q in questionnaire.reponses %}
+                            <tr>
+                                {% if app.user %}
+                                {% if app.user.username ==q.user.username %}
+
+                                <th class="alert-info" >
+                                    {% else %}
+                                        <th >
+                                            {% endif %}
+
+
+                                    {% else %}
+                                <th>
+                                        {% endif %}
+                                    <div class="post">
+
+                                        <div class="user-block">
+                        <span class="username">
+                          <a href="">{{q.user.username}}</a>
+                            <br>
+                          <a href="#" class="float-right btn-tool"></a>
+                        </span>
+                                            <span class="description">Shared -{{ q.date|date('H:i') }} | {{ q.date | date('d-m-Y')}}</span>
+                                        </div>
+                                        <!-- /.user-block -->
+                                        <p style="width: 1150px">
+                                            {{ q.text }}
+                                        </p>
+
+
+
+
+
+
+                                    </div>
+
+
+
+                                </th>
+
+
+
+                            </tr>
+                        {% endfor %}
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div><!--/.about-btn-->
+
+
+{% endblock %}

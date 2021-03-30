@@ -1,0 +1,101 @@
+{% extends 'dashboard.html.twig' %}
+
+
+{% block title %}
+
+    Ajouter
+
+    Ajouter un questionnaire
+
+
+{% endblock %}
+
+{% block body %}
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#questionnaire1_Enregistrer').click(function () {
+
+                var nom =$('#questionnaire1_nom_qst').val();
+
+                var emploi =$('#questionnaire1_description_cat_qst').val();
+                var categorie =$('#questionnaire1_categorieQuestionnaire').val();
+
+
+
+                if ((nom.length<5)||((nom.length>15)))
+                {
+                    swal({
+                        title: 'Error!',
+                        text: 'nom:il faut au moin 5 caractere et max 15',
+                        icon: 'error',
+                        button: {
+                            text: "Continue",
+                            value: true,
+                            visible: true,
+                            className: "btn btn-primary"
+                        }
+                    });
+                    return false;
+
+                }
+                else if ((emploi.length<5)||((emploi.length>255)))
+                {
+                    swal({
+                        title: 'Error!',
+                        text: 'description:il faut au moin 5 caractere et max 255',
+                        icon: 'error',
+                        button: {
+                            text: "Continue",
+                            value: true,
+                            visible: true,
+                            className: "btn btn-primary"
+                        }
+                    });
+                    return false;
+
+                }
+                else if (categorie.length==0)
+                {
+                    swal({
+                        title: 'Error!',
+                        text: 'categorie:il faut choisir categorie',
+                        icon: 'error',
+                        button: {
+                            text: "Continue",
+                            value: true,
+                            visible: true,
+                            className: "btn btn-primary"
+                        }
+                    });
+                    return false;
+
+                }
+
+
+            });
+
+
+        });
+
+    </script>
+{{ form_start(form) }}
+
+
+
+
+
+
+
+        {{ form_widget(form) }}
+
+
+
+
+
+    {{ form_end(form) }}
+{% endblock %}
